@@ -1,0 +1,50 @@
+/* Fullscreen loader overlay */
+#site-loader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff; /* white background - adjust to match theme */
+  z-index: 2000; /* above modals */
+  transition: opacity 300ms ease, visibility 300ms ease;
+}
+#site-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Center card */
+#site-loader .loader-card {
+  text-align: center;
+}
+
+/* Spinner */
+.loader-spinner {
+  width: 72px;
+  height: 72px;
+  border: 8px solid rgba(0,0,0,0.08);
+  border-top-color: #0d6efd; /* bootstrap primary */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 12px auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loader-text {
+  font-family: 'Nunito', Arial, sans-serif;
+  color: #333;
+  font-size: 14px;
+}
+
+/* small logo under spinner if present */
+#site-loader .loader-logo {
+  display: block;
+  margin: 8px auto 0 auto;
+  max-width: 160px;
+  opacity: 0.95;
+}

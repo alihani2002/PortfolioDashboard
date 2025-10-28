@@ -21,10 +21,19 @@
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/loader.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png" />
   </head>
   <body class="with-welcome-text">
+    <!-- Site loader (shows until the app is ready) -->
+    <div id="site-loader" aria-hidden="false">
+      <div class="loader-card">
+        <div class="loader-spinner" aria-hidden="true"></div>
+        <div class="loader-text">Loading the dashboard…</div>
+      </div>
+    </div>
+    <script src="assets/js/loader.js"></script>
     <div class="container-scroller">
    
       <!-- partial:partials/_navbar.html -->
@@ -35,14 +44,7 @@
               <span class="icon-menu"></span>
             </button>
           </div>
-          <div>
-            <a class="navbar-brand brand-logo" href="index.html">
-              <img src="assets/images/logo.svg" alt="logo" />
-            </a>
-            <a class="navbar-brand brand-logo-mini" href="index.html">
-              <img src="assets/images/logo-mini.svg" alt="logo" />
-            </a>
-          </div>
+        
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-top">
           <ul class="navbar-nav">
@@ -97,15 +99,6 @@
                 <span class="menu-title">User Pages</span>
                 <i class="menu-arrow"></i>
               </a>
-              <div class="collapse" id="auth">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-                </ul>
-              </div>
             </li>
           </ul>
         </nav>

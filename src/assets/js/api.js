@@ -90,6 +90,13 @@
     setToken(token) {
       if (token) localStorage.setItem('authToken', token);
       else localStorage.removeItem('authToken');
+    },
+    // Add form data specific methods
+    postForm(path, formData, options = {}) {
+      return request('POST', path, Object.assign({}, options, { body: formData }));
+    },
+    putForm(path, formData, options = {}) {
+      return request('PUT', path, Object.assign({}, options, { body: formData }));
     }
   };
 
