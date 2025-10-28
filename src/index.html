@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Star Admin2 </title>
+    <title>alyhani portfolio </title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/feather/feather.css">
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
@@ -21,7 +21,8 @@
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/loader.css">
+    <link rel="stylesheet" href="assets/css/loader.css">
+    <link rel="stylesheet" href="assets/css/contactmessage.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png" />
   </head>
@@ -121,17 +122,11 @@
                             <div class="col-12 grid-margin stretch-card">
                               <div class="card card-rounded">
                                 <div class="card-body">
-                                  <div class="d-sm-flex justify-content-between align-items-start">
-                                    <div>
-                                      <h4 class="card-title card-title-dash">Contact Requests</h4>
-                                      <p class="card-subtitle card-subtitle-dash">All requests</p>
-                                    </div>
-                                    <div>
-                                    </div>
-                                  </div>
-                                  <pre id="api-data" class="mt-3" style="background:#f7f7f7;padding:10px;white-space:pre-wrap;">API demo not started</pre>
-                                  <div class="table-responsive  mt-1">
-                           
+                                  <h4 class="card-title">Contact Messages</h4>
+                                  <p class="card-description">Here you can review messages sent by customers. Each message is shown as a full-width card for clarity and quick reading.</p>
+                                  <div id="contact-messages" class="contact-message-list">
+                                    <!-- messages will be rendered here by contactmessage.js -->
+                                    <p class="text-muted">Loading messages...</p>
                                   </div>
                                 </div>
                               </div>
@@ -181,9 +176,8 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/api.js"></script>
   <script src="assets/js/auth.js"></script>
-  <script src="assets/js/init-api-demo.js"></script>
+  <script src="assets/js/contactmessage.js"></script>
   <script src="assets/js/dashboard.js"></script>
-    <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
     <!-- End custom js for this page-->
   </body>
 </html>

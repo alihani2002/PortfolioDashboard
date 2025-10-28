@@ -1,0 +1,56 @@
+/* Styles for Contact Messages card list */
+.contact-message-list .card {
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(16,24,40,0.04);
+  overflow: hidden;
+}
+
+.cm-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.cm-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#0d6efd,#6c63ff);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  flex: 0 0 56px;
+}
+
+.cm-meta {
+  flex: 1 1 auto;
+}
+
+.cm-meta .name { font-size: 16px; font-weight: 600; margin-bottom: 2px; }
+.cm-meta .email { font-size: 13px; color: #6b7280; }
+
+.cm-time { font-size: 12px; color: #9ca3af; }
+
+.cm-subject { font-size: 14px; font-weight: 600; margin-top: 8px; }
+
+.cm-body {
+  color: #374151;
+  margin-top: 10px;
+  white-space: pre-wrap;
+}
+
+.cm-footer { display:flex; justify-content:space-between; align-items:center; margin-top:14px; }
+
+.cm-actions button { margin-left:6px; }
+
+/* collapsed body */
+.cm-body.collapsed { max-height: 64px; overflow: hidden; position: relative; }
+.cm-body.collapsed:after { content: ''; position: absolute; left:0; right:0; bottom:0; height:36px; background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,0.8)); }
+
+@media (min-width: 768px) {
+  .contact-message-list .card { display:flex; }
+  .card .card-body { flex:1; }
+}
