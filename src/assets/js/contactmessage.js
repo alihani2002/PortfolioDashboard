@@ -18,79 +18,82 @@
   }
 
   function formatDate(d) {
-    try { return new Date(d).toLocaleString(); } catch (e) { return d; }
+    if (!d) return 'Unknown';
+    const date = new Date(d);
+    return isNaN(date) ? d : date.toLocaleString();
   }
 
   function render(items) {
     container.innerHTML = '';
 
     if (!items || items.length === 0) {
-      container.appendChild(mkEl('p','text-muted','No contact messages'));
+      container.appendChild(mkEl('p', 'text-muted', 'No contact messages'));
       return;
     }
 
     items.forEach(item => {
-      const id = item.id || item.ID || item.Id || '';
-      const nameText = item.name || item.Name || item.fullName || 'Unknown';
-      const emailText = item.email || item.Email || item.mail || '';
-      const subjectText = item.subject || item.Subject || item.title || '';
-      const bodyText = item.message || item.Message || item.body || '';
-      const dateText = item.date || item.createdAt || item.Date || formatDate(item.dateCreated || item.created) || '';
-      const phoneText = item.phone || item.Phone || '';
+      const id = item.id;
+      const nameText = item.name || 'Unknown';
+      const emailText = item.email || '';
+      const subjectText = item.subject || '';
+      const bodyText = item.message || '';
+      const dateText = formatDate(item.createdOn);
+      const phoneText = item.phone || '';
 
-      const card = mkEl('div', 'card mb-3');
+      const card = mkEl('div', 'card mb-3 shadow-sm');
       const body = mkEl('div', 'card-body');
 
-      const header = mkEl('div', 'cm-header');
-      const avatar = mkEl('div','cm-avatar', initials(nameText));
-      const meta = mkEl('div','cm-meta');
-      meta.appendChild(mkEl('div','name', nameText));
-      meta.appendChild(mkEl('div','email', emailText));
+      const header = mkEl('div', 'cm-header d-flex justify-content-between align-items-center mb-2');
 
-      const right = mkEl('div','text-end');
-      right.appendChild(mkEl('div','cm-time', dateText));
+      const left = mkEl('div', 'd-flex align-items-center gap-3');
+      const avatar = mkEl('div', 'cm-avatar bg-primary text-white rounded-circle p-2 fw-bold', initials(nameText));
+      const meta = mkEl('div');
+      meta.appendChild(mkEl('div', 'fw-semibold', nameText));
+      meta.appendChild(mkEl('div', 'text-muted small', emailText));
 
-      header.appendChild(avatar);
-      header.appendChild(meta);
+      left.appendChild(avatar);
+      left.appendChild(meta);
+
+      const right = mkEl('div', 'text-end text-muted small', dateText);
+
+      header.appendChild(left);
       header.appendChild(right);
-
       body.appendChild(header);
 
-      if (subjectText) body.appendChild(mkEl('div','cm-subject', subjectText));
+      if (subjectText) body.appendChild(mkEl('div', 'fw-bold mb-2', subjectText));
 
-      const msg = mkEl('div','cm-body collapsed', bodyText);
+      const msg = mkEl('div', 'cm-body collapsed', bodyText);
       body.appendChild(msg);
 
-      const footer = mkEl('div','cm-footer');
-      const tags = mkEl('div','');
-      if (phoneText) tags.appendChild(mkEl('span','badge bg-light text-muted me-2', phoneText));
+      const footer = mkEl('div', 'cm-footer d-flex justify-content-between align-items-center mt-3');
+
+      const tags = mkEl('div', '');
+      if (phoneText)
+        tags.appendChild(mkEl('span', 'badge bg-light text-muted me-2', phoneText));
       footer.appendChild(tags);
 
-      const actions = mkEl('div','cm-actions');
-      const viewBtn = mkEl('button','btn btn-sm btn-outline-primary','View');
+      const actions = mkEl('div', 'cm-actions');
+      const viewBtn = mkEl('button', 'btn btn-sm btn-outline-primary me-2', 'View');
       viewBtn.addEventListener('click', () => {
-        if (msg.classList.contains('collapsed')) {
-          msg.classList.remove('collapsed');
-          viewBtn.textContent = 'Hide';
-        } else {
-          msg.classList.add('collapsed');
-          viewBtn.textContent = 'View';
-        }
+        const expanded = !msg.classList.toggle('collapsed');
+        viewBtn.textContent = expanded ? 'Hide' : 'View';
       });
 
-      const delBtn = mkEl('button','btn btn-sm btn-danger','Delete');
-      delBtn.addEventListener('click', function () {
+      const delBtn = mkEl('button', 'btn btn-sm btn-danger', 'Delete');
+      delBtn.addEventListener('click', async () => {
         if (!confirm('Delete this message?')) return;
-        if (!id) { alert('Missing id for this message'); return; }
-        api.del('/ContactMessage/' + id)
-          .then(() => {
-            card.remove();
-            // optional toast
-          })
-          .catch(err => {
-            console.error('Delete error', err);
-            alert('Delete failed');
-          });
+        if (!id) {
+          alert('Missing ID for this message');
+          return;
+        }
+
+        try {
+          await api.del('/ContactMessage/' + id);
+          card.remove();
+        } catch (err) {
+          console.error('Delete error', err);
+          alert('Delete failed');
+        }
       });
 
       actions.appendChild(viewBtn);
@@ -105,14 +108,20 @@
 
   // Fetch messages
   container.innerHTML = '<p class="text-muted">Loading contact messages...</p>';
-  window.api.get('/ContactMessage')
+  window.api
+    .get('/ContactMessage')
     .then(data => {
-      const items = Array.isArray(data) ? data : (Array.isArray(data.data) ? data.data : (data ? [data] : []));
+      const items = Array.isArray(data)
+        ? data
+        : Array.isArray(data.data)
+        ? data.data
+        : data
+        ? [data]
+        : [];
       render(items);
     })
     .catch(err => {
       console.error('ContactMessage load error', err);
       container.innerHTML = '<div class="alert alert-danger">Error loading messages</div>';
     });
-
 })();
